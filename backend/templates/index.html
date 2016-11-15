@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="PAT 201 Project">
+    <meta name="keywords" content="Flask, HTML/CSS, Max">
+    <meta name="author" content="Jason Brill">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <style type="text/css">
+    </style>
+    <title>EECS485</title>
+</head>
+  <body>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#new_artist').submit(function(event){
+          event.preventDefault();
+
+          var artist=document.getElementById( "new_artist_input" );
+          var data = {
+            artist: artist.value,
+          }
+
+          $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(data),
+            url: "{{url_for('api.artistApi')}}",
+            success: function(data) {
+              console.log(data)
+            },
+            error: function(error) {
+              console.log("Didn't work... :c");
+              console.log(error);
+            }
+          });
+
+        });
+      });
+    </script>
+    <header>
+      <div id="header_holder">
+      </div>
+    </header>
+  <div class="center">
+    <form id="new_artist" method='POST'>
+        <label> Enter Artist Here: </label>
+        <input id="new_artist_input" type="text" name="artist">
+        <input id="new_submit" type="submit" value="Submit"><br>
+    </form>
+  </div>
+</body>
+</html>
